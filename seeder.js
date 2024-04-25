@@ -21,7 +21,7 @@ const importData = async () => {
     }catch (error) {
         console.log('${error}'.bgRed.inverse)
         process.exit(1)
+
     }
 };
-
 importData();
