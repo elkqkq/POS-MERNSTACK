@@ -1,8 +1,17 @@
+// import "antd/dist/antd.min.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Homepage from "./pages/Homepage";
+import ItemsPage from "./pages/Itemspage";
 function App() {
   return (
-    <div>
-      <h1>POS APP</h1>
-    </div>
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Homepage />} />
+          <Route path="/items" element={<ItemsPage />} />
+        </Routes>
+      </BrowserRouter>
+    </>
   );
 }
 
