@@ -36,21 +36,22 @@ export default class DefaultLayout extends React.Component {
             mode="inline"
             defaultSelectedKeys={window.location.pathname}
           >
-            <Menu.Item key="/" icon={<HomeOutlined />}>
-              <Link to="/">Home</Link>
+           <Menu.Item key="/" icon={<HomeOutlined />}>
+                <Link to="/" style={{ textDecoration: 'none' }}>Home</Link>
             </Menu.Item>
             <Menu.Item key="/bills" icon={<CopyOutlined />}>
-              <Link to="/bills">Bills</Link>
+             <Link to="/bills" style={{ textDecoration: 'none' }}>Bills</Link>
             </Menu.Item>
             <Menu.Item key="/items" icon={<UnorderedListOutlined />}>
-              <Link to="/items">Items</Link>
+             <Link to="/items" style={{ textDecoration: 'none' }}>Items</Link>
             </Menu.Item>
             <Menu.Item key="/customers" icon={<UserOutlined />}>
-              <Link to="/customers">Cutomers</Link>
+                <Link to="/customers" style={{ textDecoration: 'none' }}>Cutomers</Link>
             </Menu.Item>
             <Menu.Item key="/logout" icon={<LogoutOutlined />}>
-              Logout
+             Logout
             </Menu.Item>
+
           </Menu>
         </Sider>
         <Layout className="site-layout">
