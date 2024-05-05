@@ -6,6 +6,8 @@
   "scripts": {
     "start": "node server.js",
     "server": "nodemon server.js",
+    "clients": "npm start --prefix customer",
+    "dev": "concurrently \"npm run server\" \"npm run clients\"",
     "seed": "node seeder.js"
   },
   "author": "Abdinasir",
