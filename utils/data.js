@@ -4,7 +4,7 @@ const items = [
       price: 1,
       category: "drinks",
       image:
-        "https://img.etimg.com/photo/msid-69212931,quality-100/chai-itself-was-once-a-trend-that-developed-this-way-.jpg",
+        "https://cff2.earth.com/uploads/2024/02/08140346/drinking-tea_every-day_delays-aging_mint-tea_1m-960x640.jpg",
     },
     {
       name: "coffee",

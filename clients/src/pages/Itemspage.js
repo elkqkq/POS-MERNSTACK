@@ -56,7 +56,7 @@ const ItemsPage = () => { // Changed from itemPage to ItemPage
 
         }}/>
         <DeleteOutlined style={{cursor:'pointer'}}  />
-        </div>
+        </div> 
       ),
  },
 

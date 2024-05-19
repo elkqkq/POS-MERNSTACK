@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux"
 import { Layout, Menu } from "antd";
 import { Link } from "react-router-dom";
 import {
@@ -9,11 +10,13 @@ import {
   HomeOutlined,
   CopyOutlined,
   UnorderedListOutlined,
+  ShoppingCartOutlined,
 } from "@ant-design/icons";
 import "../styles/DefaultLayout.css";
 const { Header, Sider, Content } = Layout;
 
  const DefaultLayout =({children}) => {
+    const {cartItems} = useSelector(state => state.rootReducer)
     const [collapsed, setCollapsed] = useState(false)
     
 
@@ -62,6 +65,10 @@ const { Header, Sider, Content } = Layout;
                 onClick: toggle,
               }
             )}
+            <div className="cartItems">
+            <p>{cartItems && cartItems.length}</p>
+                <ShoppingCartOutlined />
+            </div>
           </Header>
           <Content
             className="site-layout-background"
