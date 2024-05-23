@@ -32,7 +32,7 @@
   .ant-layout.ant-layout-has-sider {
     height: 100vh;
   }
-  
+
   .ant-layout-sider {
     border-radius: 10px !important;
     padding-top: 10px !important;
@@ -52,6 +52,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+
   }
 
   .cart-item{
@@ -61,7 +62,7 @@
   }
 
   .cart-item p {
-    margin-top: 10px;
+    margin-top: 0px;
     font-weight: bold;
   }
   

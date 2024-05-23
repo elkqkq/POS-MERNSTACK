@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "server": "nodemon server.js",
-    "clients": "npm start --prefix customer",
+    "clients": "npm start --prefix clients",
     "dev": "concurrently \"npm run server\" \"npm run clients\"",
     "seed": "node seeder.js"
   },

@@ -37,7 +37,7 @@ const Cartpages = () => {
 },
         {title:'Price', dataIndex:'price'},
         {title:'Quantity', dataIndex:'_id',
-    render: (id, record) => <div>
+        render: (id, record) => <div>
         <PlusCircleOutlined className="mx-3" style={{cursor:'pointer'}}
         onClick={() => handleIncreament (record)} />
         <b>{record.quantity}</b>

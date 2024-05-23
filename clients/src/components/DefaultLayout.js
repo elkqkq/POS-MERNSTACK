@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux"
 import { Layout, Menu } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
@@ -13,11 +13,14 @@ import {
   ShoppingCartOutlined,
 } from "@ant-design/icons";
 import "../styles/DefaultLayout.css";
+import Spinner from "./Spinner";
 const { Header, Sider, Content } = Layout;
 
  const DefaultLayout =({children}) => {
-    const {cartItems} = useSelector(state => state.rootReducer)
+    const navigate = useNavigate()
+    const {cartItems, loading} = useSelector(state => state.rootReducer)
     const [collapsed, setCollapsed] = useState(false)
+    
     
 
   const toggle = () => {
@@ -25,10 +28,15 @@ const { Header, Sider, Content } = Layout;
       !collapsed,
     );
   };
+// get localstorage data
+  useEffect (() => {
+      localStorage.setItem("cartItems", JSON.stringify(cartItems))
+  },[cartItems])
 
   
     return (
       <Layout>
+        {loading && <Spinner/>}
         <Sider trigger={null} collapsible collapsed={collapsed}>
           <div className="logo">
             <h1 className="text-center text-light font-wight-bold mt-4">POS</h1>
@@ -65,7 +73,8 @@ const { Header, Sider, Content } = Layout;
                 onClick: toggle,
               }
             )}
-            <div className="cartItems">
+            <div className="cart-item" 
+            onClick={() => navigate('/cart')}>
             <p>{cartItems && cartItems.length}</p>
                 <ShoppingCartOutlined />
             </div>
