@@ -13,7 +13,7 @@ const Itemspage = () => {
   const [popupmodal, setpopupmodal] = useState (false)
   const [editItem, setEditItem] = useState (null)
 
-
+//get item
   const getAllItems = async ()  => {
     try {
         dispatch({
@@ -24,15 +24,35 @@ const Itemspage = () => {
         dispatch({type: 'HIDE_LOADING'})
         console.log(data);
     } catch (error) {
+      dispatch({type: 'HIDE_LOADING'});
         console.log(error);
     }
 }
   //use effect
   useEffect (() => {
-   
-
     getAllItems();  
 },[]);
+
+//handleDelete
+  const handleDelete = async (record) => {
+    try {
+      dispatch({
+          type: 'SHOW_LOADING'
+      });
+     await axios.post('/api/items/delete-item', {itemId:record._id});
+      message.success('Item Deleted Succesfully')
+      getAllItems();  
+      setpopupmodal (false);
+      dispatch({type: 'HIDE_LOADING'})
+      
+  } catch (error) {
+    dispatch({type: 'HIDE_LOADING'});
+    message.error ('Something Went Wrong')
+      console.log(error);
+  }
+  }
+
+
 
 const columns = [
   {title:'Name', dataIndex:'name'},
@@ -52,27 +72,51 @@ const columns = [
       }}
       />
       
-      <DeleteOutlined style={{cursor:'pointer'}} />
+      <DeleteOutlined style={{cursor:'pointer'}}
+       onClick={()  =>{
+        handleDelete(record)
+       }}
+       />
       </div> 
 },
 
 ];
 //handle submit
 const handleSubmit = async (value) => {
-  try {
-    dispatch({
-        type: 'SHOW_LOADING'
-    })
-    const res = await axios.post('/api/items/add-item', value);
-    message.success('Item Added Succesfully')
-    getAllItems();  
-    setpopupmodal (false);
-    dispatch({type: 'HIDE_LOADING'})
-    
-} catch (error) {
-  message.error ('Something Went Wrong')
-    console.log(error);
-}
+  if (editItem === null){
+    try {
+      dispatch({
+          type: 'SHOW_LOADING'
+      })
+      const res = await axios.post('/api/items/add-item', value);
+      message.success('Item Added Succesfully')
+      getAllItems();  
+      setpopupmodal (false);
+      dispatch({type: 'HIDE_LOADING'})
+      
+  } catch (error) {
+    dispatch({type: 'HIDE_LOADING'});
+    message.error ('Something Went Wrong')
+      console.log(error);
+  }
+  }else{
+    try {
+      dispatch({
+          type: 'SHOW_LOADING'
+      })
+       await axios.put('/api/items/edit-item', {...value, itemId:editItem._id});
+      message.success('Item Updated Succesfully')
+      getAllItems();  
+      setpopupmodal (false);
+      dispatch({type: 'HIDE_LOADING'})
+      
+  } catch (error) {
+    dispatch({type: 'HIDE_LOADING'});
+    message.error ('Something Went Wrong')
+      console.log(error);
+  }
+  }
+  
 };
   return (
     <div>
