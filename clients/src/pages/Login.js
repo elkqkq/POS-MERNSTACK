@@ -1,46 +1,95 @@
+import React , {useEffect} from 'react'
 import { Form, Input, Button } from 'antd';
-import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link,useNavigate } from 'react-router-dom';
+import {message} from 'antd'
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
+
+
 const Login = () => {
-        const handleSubmit = (value) =>{
-            console.log(value)
-        };
-  return (
+const dispatch = useDispatch (); 
+const navigate = useNavigate ();   
 
-    <>
-    <div className='login'>
-        <div className='register-form'>            
-        <h1>DIAMOND CAFE</h1>
-        <h3>Log In Page</h3>
 
-        <Form
-        layout='vertical'
+    const handleSubmit = async (value) => {
+        try {
+            dispatch({
+                type: "SHOW_LOADING"
+                
+            });
+                
+           const res = await axios.post('/api/users/login', value);
+            message.success("User Login Successfully");
+            localStorage.setItem('auth', JSON.stringify(res.data));
+            navigate ('/')
+           
+           
+            
+            dispatch({
+                type: "HIDE_LOADING"
+            });
+            
+        } catch (error) {
+            message.error("Something went wrong")
+            console.log(error); 
+            
+        }
+     
+
+    };
+
+    // Current User Login
+    useEffect(() => {
+      if(localStorage.getItem('auth')){
+        localStorage.getItem('auth');
+        navigate ('/');
+
+      }
+    
         
-          onFinish={handleSubmit}>
-        <Form.Item name="user id" label="User ID">
+    }, [navigate]);
+
+
+
+
+  return (
+    <>
+     <div  className='register'>
+        <div className='register-form'>
+
+        
+
+
+        <h1>DIAMOND CAFE</h1>
+        <h3>Login page</h3>
+
+        <Form layout='vertical' 
+        
+         onFinish={handleSubmit}>
+      
+        <Form.Item name="userId" label="User ID">
           <Input/>
         </Form.Item>
         <Form.Item name="password" label="Password">
-          <Input/>
+          <Input type='password'/>
         </Form.Item>
-
+       
         <div className='d-flex justify-content-between'>
             <p>
-                Not  A User Please
-                <Link to="/register">Register Here!</Link>
-
+                Not a User Please
+                <Link to= '/register'>   Register Here</Link>
             </p>
-            
-          <Button type='primary' htmlType='submit'>
-           LOG-IN
-          </Button>
-        </div>     
-     </Form>
+        <Button type='primary' htmlType='submit'>Login</Button>
 
-    </div>
-    </div>
-</>
+        </div>
+       
+
+       </Form>
+       </div>
+
+     </div>
+    </>
   )
 }
 
-export default Login;
+export default Login

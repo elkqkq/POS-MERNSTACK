@@ -58,7 +58,14 @@ const { Header, Sider, Content } = Layout;
             <Menu.Item key="/customers" icon={<UserOutlined />}>
                 <Link to="/customers" style={{ textDecoration: 'none' }}>Cutomers</Link>
             </Menu.Item>
-            <Menu.Item key="/logout" icon={<LogoutOutlined />}>
+            <Menu.Item key="/logout" 
+            icon={<LogoutOutlined />}
+            onClick={() =>
+               {
+                localStorage.removeItem("auth")
+                navigate("/login")
+              }}
+            >
              Logout
             </Menu.Item>
 
