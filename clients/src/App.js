@@ -4,8 +4,8 @@ import Cartpages from "./pages/Cartpages";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Itemspage from "./pages/Itemspage";
-// import BillsPage from "./pages/BillsPage";
-// import ClientPage from "./pages/ClientPage";
+import Customerpage from "./pages/Customerpage";
+import Billspage from "./pages/Billspage";
 
 function App() {
   return (
@@ -36,16 +36,16 @@ function App() {
             </ProtectedRoute>
           } 
           />
-          {/* <Route path="/bills" element={
+          <Route path="/bills" element={
             <ProtectedRoute>
-              <BillsPage />
+              <Billspage />
             </ProtectedRoute>
-          } /> */}
-          {/* <Route path="/clients" element={
+          } />
+          <Route path="/customers" element={
             <ProtectedRoute>
-              <ClientPage />
+              <Customerpage />
             </ProtectedRoute>
-          } /> */}
+          } />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Routes>

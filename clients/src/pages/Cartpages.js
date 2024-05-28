@@ -3,6 +3,8 @@ import DefaultLayout from '../components/DefaultLayout';
 import { DeleteOutlined, PlusCircleOutlined , MinusCircleOutlined} from '@ant-design/icons';
 import { useSelector,useDispatch } from 'react-redux';
 import { Button, Modal, Table, message, Form, Input, Select } from 'antd';
+import axios from 'axios';
+import {useNavigate } from 'react-router-dom';
 
 const Cartpages = () => {
     const [subTotal, setSubTotal] = useState (0)
@@ -10,6 +12,7 @@ const Cartpages = () => {
 
 
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const {cartItems} = useSelector(state => state.rootReducer)
     //handle Increament
 
@@ -66,9 +69,26 @@ const Cartpages = () => {
     },[cartItems]);
 
     //handleSubmit
-    const handleSubmit = (values) => {
-        console.log(values);
-    }
+    const handleSubmit = async (values) => {
+        try{
+            const newObject ={
+                cartItems,
+                ...values,
+                subTotal,
+                Tax:Number((subTotal / 100 ) * 3).toFixed(2),
+                totalAmount: Number (Number(subTotal) + Number(((subTotal / 100 ) * 10).toFixed(2))),
+                userId: JSON.parse(localStorage.getItem("auth"))._id ,
+            };
+            // console.log(newObject);
+            await axios.post('/api/bills/add-bills', newObject);
+            message.success("Bill Generated");
+            navigate('/bills');
+        }catch(error){
+            message.error("Something went Wrong")
+            console.log(error)
+        }
+        
+    };
 
 
   return (
@@ -86,14 +106,14 @@ const Cartpages = () => {
          footer={false}>
             <Form layout='vertical' 
              onFinish={handleSubmit}>
-            <Form.Item name="CustomerName" label="Customer Name">
+            <Form.Item name="customerName" label="Customer Name">
               <Input/>
             </Form.Item>
             <Form.Item name="CustomerNumber" label="Customer Contact">
               <Input/>
             </Form.Item>
            
-            <Form.Item name="PaymentMode" label="Payment Method">
+            <Form.Item name="paymentMode" label="Payment Method">
             <Select>
               <Select.Option value="cash">Cash</Select.Option>
               <Select.Option value="card">Card</Select.Option>
